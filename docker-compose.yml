@@ -1,0 +1,31 @@
+
+services:
+  # Piston Code Execution Engine
+  piston:
+    image: ghcr.io/engineer-man/piston
+    container_name: piston_api
+    privileged: true
+    ports:
+      - "2000:2000"
+    volumes:
+      - piston-packages:/piston/packages
+    restart: unless-stopped
+
+  # Express Backend
+  backend:
+    build: ./server
+    container_name: ide_backend
+    ports:
+      - "3001:3001"
+    environment:
+      - PISTON_URL=http://piston:2000
+      - NODE_ENV=development
+    depends_on:
+      - piston
+    restart: unless-stopped
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+volumes:
+  piston-packages:
