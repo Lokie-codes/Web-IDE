@@ -1,31 +1,60 @@
-
 services:
   # Piston Code Execution Engine
   piston:
-    image: ghcr.io/engineer-man/piston
-    container_name: piston_api
+    image: ghcr.io/engineer-man/piston:latest
+    container_name: codeforge_piston
     privileged: true
     ports:
       - "2000:2000"
     volumes:
       - piston-packages:/piston/packages
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2000/api/v2/runtimes"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   # Express Backend
   backend:
-    build: ./server
-    container_name: ide_backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: codeforge_backend
     ports:
       - "3001:3001"
     environment:
       - PISTON_URL=http://piston:2000
-      - NODE_ENV=development
+      - NODE_ENV=production
+      - PORT=3001
     depends_on:
       - piston
     restart: unless-stopped
     volumes:
-      - ./server:/app
-      - /app/node_modules
+      - ./server/data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: codeforge_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    environment:
+      - VITE_API_URL=http://localhost:3001
 
 volumes:
   piston-packages:
+
+networks:
+  default:
+    name: codeforge_network

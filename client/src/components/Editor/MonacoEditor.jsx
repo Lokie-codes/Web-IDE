@@ -1,23 +1,48 @@
 import React, { useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { useEditorStore } from '../../store/editorStore';
+import { useCodeExecution } from '../../hooks/useCodeExecution';
 
 const MonacoEditor = () => {
   const editorRef = useRef(null);
   const { code, setCode, language, theme, activeTabId, updateTabContent, mode, currentProject } = useEditorStore();
+  const { executeCode } = useCodeExecution();
   const saveTimeoutRef = useRef(null);
 
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
     
+    // Ctrl+S / Cmd+S - Save
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
-      console.log('Manual save triggered');
+      console.log('💾 Manual save triggered');
       saveCurrentFile();
     });
 
+    // Ctrl+Enter / Cmd+Enter - Run Code
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
-      console.log('Run triggered');
+      console.log('▶️ Run code shortcut triggered');
+      executeCode();
     });
+
+    // Ctrl+B / Cmd+B - Toggle Sidebar
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyB, () => {
+      console.log('📂 Toggle sidebar');
+      useEditorStore.getState().toggleSidebar();
+    });
+
+    // Ctrl+` / Cmd+` - Toggle Output
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Backquote, () => {
+      console.log('📋 Toggle output');
+      useEditorStore.getState().toggleOutput();
+    });
+
+    // Ctrl+Shift+P / Cmd+Shift+P - Command Palette (Monaco built-in)
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyP, () => {
+      editor.trigger('keyboard', 'editor.action.quickCommand', {});
+    });
+
+    // Focus editor
+    editor.focus();
   };
 
   const handleEditorChange = (value) => {
@@ -31,7 +56,7 @@ const MonacoEditor = () => {
       }
       saveTimeoutRef.current = setTimeout(() => {
         saveCurrentFile(value);
-      }, 1000); // Save after 1 second of inactivity
+      }, 1000);
     }
   };
 
@@ -52,8 +77,9 @@ const MonacoEditor = () => {
           path: activeTab.path
         })
       });
+      console.log('✅ File saved:', activeTab.name);
     } catch (error) {
-      console.error('Auto-save failed:', error);
+      console.error('❌ Auto-save failed:', error);
     }
   };
 
@@ -93,10 +119,26 @@ const MonacoEditor = () => {
           bracketPairs: true,
           indentation: true,
         },
+        // Additional polish
+        suggest: {
+          showKeywords: true,
+          showSnippets: true,
+        },
+        quickSuggestions: {
+          other: true,
+          comments: false,
+          strings: false
+        },
+        folding: true,
+        foldingStrategy: 'indentation',
+        showFoldingControls: 'always',
       }}
       loading={
         <div className="flex items-center justify-center h-full bg-vscode-bg">
-          <div className="text-vscode-text">Loading editor...</div>
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-12 h-12 border-4 border-t-[#007acc] border-gray-600 rounded-full animate-spin" />
+            <div className="text-vscode-text">Loading editor...</div>
+          </div>
         </div>
       }
     />

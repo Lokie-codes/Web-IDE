@@ -68,3 +68,50 @@ button {
 input, select, textarea {
   font-family: inherit;
 }
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  /* Hide sidebar on mobile by default */
+  .mobile-hide-sidebar {
+    display: none;
+  }
+
+  /* Make toolbar scrollable on mobile */
+  .toolbar-responsive {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  /* Adjust font sizes for mobile */
+  .monaco-editor {
+    font-size: 12px !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Tooltip styles */
+[title] {
+  position: relative;
+}

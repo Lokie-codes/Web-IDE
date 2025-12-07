@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import 'dotenv/config';
 import executeRouter from './routes/execute.js';
 import gistsRouter from './routes/gists.js';
 import projectsRouter from './routes/projects.js';
@@ -7,8 +8,14 @@ import projectsRouter from './routes/projects.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// CORS with environment variable
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials: true
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 
 // Request logging
@@ -21,11 +28,12 @@ app.use((req, res, next) => {
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'ok', 
-    message: 'CodeForge IDE Backend - Phase 2',
+    message: 'CodeForge IDE Backend - Phase 5',
     pistonUrl: process.env.PISTON_URL || 'http://localhost:2000',
     timestamp: new Date().toISOString()
   });
 });
+
 
 app.use('/api/execute', executeRouter);
 app.use('/api/gists', gistsRouter)

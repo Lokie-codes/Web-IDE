@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { 
   Play, Sun, Moon, PanelLeft, PanelBottom, 
-  FileCode, Download, Image, Save
+  FileCode, Download, Image, Save, HelpCircle
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { useCodeExecution } from '../../hooks/useCodeExecution';
 import LanguageSelector from '../Editor/LanguageSelector';
 import SnapshotModal from '../CodeSnapshot/SnapshotModal';
 import SaveGistModal from './SaveGistModal';
+import KeyboardShortcuts from '../HelpModal/KeyBoardShortcuts';
 
 const Toolbar = () => {
   const { 
@@ -20,6 +21,7 @@ const Toolbar = () => {
 
   const [showSnapshot, setShowSnapshot] = useState(false);
   const [showSaveGist, setShowSaveGist] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   const handleRun = () => {
     executeCode();
@@ -27,7 +29,6 @@ const Toolbar = () => {
 
   const handleDownload = async () => {
     if (mode === 'project' && currentProject) {
-      // Download project as ZIP
       window.location.href = `http://localhost:3001/api/projects/${currentProject.id}/download`;
     } else {
       alert('Download is only available in Project mode. Switch to Project mode to download your files as a ZIP.');
@@ -41,7 +42,6 @@ const Toolbar = () => {
         
         {/* Left Section */}
         <div className="flex items-center gap-3">
-          {/* Logo */}
           <div className="flex items-center gap-2 mr-3">
             <FileCode className="w-6 h-6 text-[#007acc]" />
             <span className={`font-semibold text-base ${isDark ? 'text-white' : 'text-gray-800'}`}>
@@ -49,7 +49,6 @@ const Toolbar = () => {
             </span>
           </div>
 
-          {/* Toggle Sidebar */}
           <ToolbarButton 
             icon={<PanelLeft size={20} />} 
             onClick={toggleSidebar}
@@ -57,7 +56,6 @@ const Toolbar = () => {
             isDark={isDark}
           />
 
-          {/* Mode Toggle */}
           <div className={`flex rounded-md overflow-hidden border ml-2
             ${isDark ? 'border-[#3c3c3c]' : 'border-gray-300'}`}>
             <button
@@ -88,7 +86,6 @@ const Toolbar = () => {
         <div className="flex items-center gap-3">
           <LanguageSelector />
           
-          {/* Run Button */}
           <button
             onClick={handleRun}
             disabled={isRunning}
@@ -106,7 +103,6 @@ const Toolbar = () => {
 
         {/* Right Section */}
         <div className="flex items-center gap-2">
-          {/* Save as Gist (Single File Mode) */}
           {mode === 'single' && (
             <ToolbarButton 
               icon={<Save size={20} />} 
@@ -116,7 +112,6 @@ const Toolbar = () => {
             />
           )}
 
-          {/* Export as Image */}
           <ToolbarButton 
             icon={<Image size={20} />} 
             onClick={() => setShowSnapshot(true)}
@@ -124,7 +119,6 @@ const Toolbar = () => {
             isDark={isDark}
           />
           
-          {/* Download Project */}
           <ToolbarButton 
             icon={<Download size={20} />} 
             onClick={handleDownload}
@@ -134,15 +128,20 @@ const Toolbar = () => {
 
           <div className={`w-px h-6 mx-1 ${isDark ? 'bg-[#3c3c3c]' : 'bg-gray-300'}`} />
 
-          {/* Toggle Output Panel */}
           <ToolbarButton 
-            icon={<PanelBottom size={20} />} 
-            onClick={toggleOutput}
-            tooltip="Toggle Output Panel"
+            icon={<HelpCircle size={20} />} 
+            onClick={() => setShowHelp(true)}
+            tooltip="Keyboard Shortcuts"
             isDark={isDark}
           />
 
-          {/* Theme Toggle */}
+          <ToolbarButton 
+            icon={<PanelBottom size={20} />} 
+            onClick={toggleOutput}
+            tooltip="Toggle Output Panel (Ctrl+`)"
+            isDark={isDark}
+          />
+
           <ToolbarButton 
             icon={isDark ? <Sun size={20} /> : <Moon size={20} />} 
             onClick={toggleTheme}
@@ -155,6 +154,7 @@ const Toolbar = () => {
       {/* Modals */}
       <SnapshotModal isOpen={showSnapshot} onClose={() => setShowSnapshot(false)} />
       <SaveGistModal isOpen={showSaveGist} onClose={() => setShowSaveGist(false)} />
+      <KeyboardShortcuts isOpen={showHelp} onClose={() => setShowHelp(false)} />
     </>
   );
 };

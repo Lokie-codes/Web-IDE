@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEditorStore } from '../store/editorStore';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const useCodeExecution = () => {
   const { code, language, setOutput, setIsRunning } = useEditorStore();
@@ -13,7 +13,7 @@ export const useCodeExecution = () => {
     setOutput('⏳ Executing code...\n');
 
     try {
-      const response = await fetch(`${API_URL}/execute`, {
+      const response = await fetch(`${API_URL}/api/execute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
