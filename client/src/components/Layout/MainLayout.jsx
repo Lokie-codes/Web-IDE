@@ -5,38 +5,32 @@ import Sidebar from '../Sidebar/Sidebar';
 import MonacoEditor from '../Editor/MonacoEditor';
 import EditorTabs from '../Editor/EditorTabs';
 import OutputPanel from '../Output/OutputPanel';
+import TerminalPanel from '../Terminal/TerminalPanel';
 import { Wifi } from 'lucide-react';
 
 const MainLayout = () => {
-  const { sidebarOpen, outputOpen, theme } = useEditorStore();
+  const { sidebarOpen, outputOpen, terminalOpen, theme } = useEditorStore();
   const isDark = theme === 'vs-dark';
 
   return (
     <div className={`h-screen flex flex-col ${isDark ? 'bg-[#1e1e1e]' : 'bg-white'}`}>
-      {/* Top Toolbar */}
       <Toolbar />
 
-      {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
         {sidebarOpen && <Sidebar />}
 
-        {/* Editor Area */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Editor Tabs */}
           <EditorTabs />
 
-          {/* Monaco Editor */}
           <div className="flex-1 overflow-hidden">
             <MonacoEditor />
           </div>
 
-          {/* Output Panel */}
           {outputOpen && <OutputPanel />}
+          {terminalOpen && <TerminalPanel />}
         </div>
       </div>
 
-      {/* Status Bar */}
       <StatusBar />
     </div>
   );

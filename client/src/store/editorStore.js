@@ -11,6 +11,7 @@ export const useEditorStore = create((set, get) => ({
   mode: 'single',
   sidebarOpen: true,
   outputOpen: true,
+  terminalOpen: false,
   
   // Output State
   output: '',
@@ -26,6 +27,7 @@ export const useEditorStore = create((set, get) => ({
   
   // Actions
   setCode: (code) => set({ code }),
+  toggleTerminal: () => set((state) => ({ terminalOpen: !state.terminalOpen })),
   
   setLanguage: (language) => {
     const langConfig = SUPPORTED_LANGUAGES.find(l => l.id === language);
