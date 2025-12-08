@@ -2,7 +2,7 @@
 
 A fully-featured web-based Integrated Development Environment (IDE) with VS Code-like interface, multi-language code execution, and project management capabilities.
 
-![CodeForge IDE](./assets/online-IDE-logo.png)
+<img src="./assets/online-IDE-logo.png" alt="CodeForge IDE" width="200" height="180">
 
 ## ✨ Features
 
