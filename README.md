@@ -25,6 +25,17 @@ A fully-featured web-based Integrated Development Environment (IDE) with VS Code
 ### Supported Languages
 Python • JavaScript/Node.js • TypeScript • Java • C • C++ • C# • Go • Rust • Ruby • PHP • Swift • Kotlin • Bash • And more!
 
+## 📸 Screenshots
+
+### Welcome Screen
+<img src="./assets/screenshots/welcome-screen.png" alt="Welcome Screen" width="800" class="rounded-lg shadow-lg">
+
+### Dark Mode (Default)
+<img src="./assets/screenshots/ide-dark.png" alt="CodeForge IDE Dark Mode" width="800" class="rounded-lg shadow-lg">
+
+### Light Mode
+<img src="./assets/screenshots/ide-light.png" alt="CodeForge IDE Light Mode" width="800" class="rounded-lg shadow-lg">
+
 ## 🏗️ Architecture
 
 ```
