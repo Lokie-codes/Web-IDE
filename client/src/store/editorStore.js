@@ -38,7 +38,21 @@ export const useEditorStore = create((set, get) => ({
     );
     set({ language, tabs: updatedTabs });
   },
-  
+  // AI State
+  aiHistory: [],
+  codeExecutionCount: 0,
+
+  // Actions
+  incrementExecutionCount: () => set((state) => ({ 
+    codeExecutionCount: state.codeExecutionCount + 1 
+  })),
+
+  addAIMessage: (message) => set((state) => ({
+    aiHistory: [...state.aiHistory, message]
+  })),
+
+  clearAIHistory: () => set({ aiHistory: [] }),
+
   setTheme: (theme) => set({ theme }),
   
   toggleTheme: () => set((state) => ({

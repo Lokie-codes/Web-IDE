@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { 
-  Files, Search, GitBranch, Bug, Puzzle, 
+import {
+  Files, Search, GitBranch, Bug, Puzzle,
   Settings, ChevronDown, FileCode, Plus
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
@@ -11,7 +11,7 @@ const Sidebar = () => {
   const isDark = theme === 'vs-dark';
 
   return (
-    <div className={`flex h-full ${isDark ? 'bg-[#252526]' : 'bg-gray-50'}`}>
+    <div className={`flex h-full w-full rounded-xl overflow-hidden ${isDark ? 'bg-[#252526]' : 'bg-gray-50'}`}>
       {/* Activity Bar */}
       <div className={`w-12 flex flex-col items-center py-3 border-r
         ${isDark ? 'bg-[#333333] border-[#3c3c3c]' : 'bg-gray-200 border-gray-300'}`}>
@@ -25,8 +25,8 @@ const Sidebar = () => {
       </div>
 
       {/* Explorer Panel */}
-      <div className={`w-64 flex flex-col border-r
-        ${isDark ? 'bg-[#252526] border-[#3c3c3c]' : 'bg-gray-50 border-gray-300'}`}>
+      <div className={`w-64 flex flex-col
+        ${isDark ? 'bg-[#252526]' : 'bg-gray-50'}`}>
         <div className={`px-4 py-3 text-xs font-bold uppercase tracking-wider
           ${isDark ? 'text-[#cccccc]' : 'text-gray-600'}`}>
           Explorer
@@ -46,7 +46,7 @@ const ActivityIcon = ({ icon, active, isDark, tooltip }) => (
   <button
     title={tooltip}
     className={`w-12 h-12 flex items-center justify-center transition-all mb-1 relative
-      ${active 
+      ${active
         ? (isDark ? 'text-white bg-[#37373d]' : 'text-blue-600 bg-gray-300')
         : (isDark ? 'text-[#858585] hover:text-white' : 'text-gray-500 hover:text-gray-800')
       }`}
@@ -58,7 +58,7 @@ const ActivityIcon = ({ icon, active, isDark, tooltip }) => (
 
 const SingleFileExplorer = ({ isDark }) => {
   const { tabs } = useEditorStore();
-  
+
   return (
     <div className="px-2 py-2">
       <div className={`flex items-center gap-1 px-2 py-2 text-xs font-semibold uppercase
@@ -69,9 +69,9 @@ const SingleFileExplorer = ({ isDark }) => {
       {tabs.map((tab) => (
         <div
           key={tab.id}
-          className={`flex items-center gap-2 px-3 py-2 cursor-pointer rounded-sm mx-1
-            ${isDark 
-              ? 'hover:bg-[#2a2d2e] text-[#cccccc]' 
+          className={`flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md mx-2 my-1 transition-colors
+            ${isDark
+              ? 'hover:bg-[#2a2d2e] text-[#cccccc]'
               : 'hover:bg-gray-200 text-gray-800'
             }
             ${tab.active ? (isDark ? 'bg-[#37373d]' : 'bg-gray-200') : ''}`}
@@ -98,13 +98,13 @@ const ProjectExplorer = ({ isDark }) => {
       // Try to load existing project or create new one
       const response = await fetch('http://localhost:3001/api/projects');
       const result = await response.json();
-      
+
       if (result.success && result.projects.length > 0) {
         // Load first project
         const projectId = result.projects[0].id;
         const projectResponse = await fetch(`http://localhost:3001/api/projects/${projectId}`);
         const projectResult = await projectResponse.json();
-        
+
         if (projectResult.success) {
           setCurrentProject(projectResult.project);
           setProjectFiles(projectResult.project.files);
@@ -120,7 +120,7 @@ const ProjectExplorer = ({ isDark }) => {
           })
         });
         const createResult = await createResponse.json();
-        
+
         if (createResult.success) {
           loadProject(); // Reload
         }
@@ -201,8 +201,8 @@ const ProjectExplorer = ({ isDark }) => {
           <Plus size={14} />
         </button>
       </div>
-      
-      <ProjectFileTree 
+
+      <ProjectFileTree
         files={projectFiles}
         projectId={currentProject.id}
         onCreateFile={handleCreateFile}

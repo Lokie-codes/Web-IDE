@@ -16,11 +16,13 @@
 
 * {
   margin: 0;
-  padding: 0;
+  /* padding: 0; */
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -65,12 +67,15 @@ button {
 }
 
 /* Ensure text is readable */
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
 /* Responsive utilities */
 @media (max-width: 768px) {
+
   /* Hide sidebar on mobile by default */
   .mobile-hide-sidebar {
     display: none;
@@ -101,6 +106,7 @@ input, select, textarea {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -114,4 +120,45 @@ input, select, textarea {
 /* Tooltip styles */
 [title] {
   position: relative;
+}
+
+/* Animations for Welcome Screen and Modals */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn95 {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-in {
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.zoom-in-95 {
+  animation-name: zoomIn95;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
 }

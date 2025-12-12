@@ -24,6 +24,12 @@ const MonacoEditor = () => {
       executeCode();
     });
 
+    // Ctrl+Shift+F - Search Code
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyF, () => {
+      console.log('🔍 Open search');
+      // You can trigger search modal here by updating store
+    });
+
     // Ctrl+B / Cmd+B - Toggle Sidebar
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyB, () => {
       console.log('📂 Toggle sidebar');

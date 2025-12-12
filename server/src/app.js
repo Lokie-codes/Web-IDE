@@ -4,6 +4,7 @@ import 'dotenv/config';
 import executeRouter from './routes/execute.js';
 import gistsRouter from './routes/gists.js';
 import projectsRouter from './routes/projects.js';
+import aiRouter from './routes/ai.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -38,6 +39,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/execute', executeRouter);
 app.use('/api/gists', gistsRouter)
 app.use('/api/projects', projectsRouter);
+app.use('/api/ai', aiRouter);
 
 // Error handler
 app.use((err, req, res, next) => {

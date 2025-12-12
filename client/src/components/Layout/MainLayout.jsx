@@ -16,13 +16,17 @@ const MainLayout = () => {
     <div className={`h-screen flex flex-col ${isDark ? 'bg-[#1e1e1e]' : 'bg-white'}`}>
       <Toolbar />
 
-      <div className="flex flex-1 overflow-hidden">
-        {sidebarOpen && <Sidebar />}
+      <div className="flex flex-1 overflow-hidden p-2 gap-2">
+        {sidebarOpen && (
+          <div className="rounded-xl overflow-hidden shadow-sm flex-shrink-0">
+            <Sidebar />
+          </div>
+        )}
 
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden rounded-xl shadow-sm border border-transparent">
           <EditorTabs />
 
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 overflow-hidden relative">
             <MonacoEditor />
           </div>
 
@@ -39,7 +43,7 @@ const MainLayout = () => {
 const StatusBar = () => {
   const { language, theme, mode } = useEditorStore();
   const isDark = theme === 'vs-dark';
-  
+
   const langConfig = {
     javascript: 'JavaScript',
     python: 'Python',
@@ -48,15 +52,15 @@ const StatusBar = () => {
   };
 
   return (
-    <div className={`h-6 flex items-center justify-between px-3 text-xs border-t
+    <div className={`h-8 flex items-center justify-between px-4 text-xs border-t
       ${isDark ? 'bg-[#007acc] text-white border-[#007acc]' : 'bg-blue-600 text-white border-blue-600'}`}>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <Wifi size={14} />
         <span className="font-medium">CodeForge IDE</span>
         <span className="opacity-75">•</span>
         <span className="capitalize">{mode} File Mode</span>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <span className="font-medium">{langConfig[language] || language}</span>
         <span>•</span>
         <span>UTF-8</span>

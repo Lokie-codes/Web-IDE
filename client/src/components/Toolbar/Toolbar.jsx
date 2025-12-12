@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
   Play, Sun, Moon, PanelLeft, PanelBottom,
-  FileCode, Download, Image, Save, HelpCircle, Settings
+  FileCode, Download, Image, Save, HelpCircle, Settings,
+  Terminal, Sparkles, Search as SearchIcon, Activity
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 import { useCodeExecution } from '../../hooks/useCodeExecution';
@@ -10,7 +11,9 @@ import SnapshotModal from '../CodeSnapshot/SnapshotModal';
 import SaveGistModal from './SaveGistModal';
 import KeyboardShortcuts from '../HelpModal/KeyBoardShortcuts';
 import SettingsModal from '../Settings/SettingsModal';
-import { Terminal } from 'lucide-react';
+import CodeSearch from '../Search/CodeSearch';
+import PerformanceMonitor from '../Performance/PerformanceMonitor';
+import AIAssistant from '../AI/AIAssistant';
 
 const Toolbar = () => {
   const {
@@ -25,6 +28,9 @@ const Toolbar = () => {
   const [showSaveGist, setShowSaveGist] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showPerformance, setShowPerformance] = useState(false);
+  const [showAI, setShowAI] = useState(false);
 
   const handleRun = () => {
     executeCode();
@@ -44,7 +50,7 @@ const Toolbar = () => {
         ${isDark ? 'bg-[#252526] border-[#3c3c3c]' : 'bg-gray-100 border-gray-300'}`}>
 
         {/* Left Section */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-5">
           <div className="flex items-center gap-2 mr-3">
             <FileCode className="w-6 h-6 text-[#007acc]" />
             <span className={`font-semibold text-base ${isDark ? 'text-white' : 'text-gray-800'}`}>
@@ -86,7 +92,7 @@ const Toolbar = () => {
         </div>
 
         {/* Center Section */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           <LanguageSelector />
 
           <button
@@ -105,7 +111,7 @@ const Toolbar = () => {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {mode === 'single' && (
             <ToolbarButton
               icon={<Save size={20} />}
@@ -130,6 +136,31 @@ const Toolbar = () => {
           />
 
           <div className={`w-px h-6 mx-1 ${isDark ? 'bg-[#3c3c3c]' : 'bg-gray-300'}`} />
+
+
+          {/* AI Assistant */}
+          <ToolbarButton
+            icon={<Sparkles size={20} />}
+            onClick={() => setShowAI(true)}
+            tooltip="AI Assistant"
+            isDark={isDark}
+          />
+
+          {/* Code Search */}
+          <ToolbarButton
+            icon={<SearchIcon size={20} />}
+            onClick={() => setShowSearch(true)}
+            tooltip="Search Code (Ctrl+Shift+F)"
+            isDark={isDark}
+          />
+
+          {/* Performance Monitor */}
+          <ToolbarButton
+            icon={<Activity size={20} />}
+            onClick={() => setShowPerformance(true)}
+            tooltip="Performance Monitor"
+            isDark={isDark}
+          />
 
           <ToolbarButton
             icon={<Settings size={20} />}
@@ -172,6 +203,9 @@ const Toolbar = () => {
       <SaveGistModal isOpen={showSaveGist} onClose={() => setShowSaveGist(false)} />
       <KeyboardShortcuts isOpen={showHelp} onClose={() => setShowHelp(false)} />
       <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
+      <CodeSearch isOpen={showSearch} onClose={() => setShowSearch(false)} />
+      <PerformanceMonitor isOpen={showPerformance} onClose={() => setShowPerformance(false)} />
+      <AIAssistant isOpen={showAI} onClose={() => setShowAI(false)} />
 
     </>
   );

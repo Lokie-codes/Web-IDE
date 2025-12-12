@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { 
-  ChevronRight, ChevronDown, File, Folder, 
-  FolderOpen, Plus, Trash2 
+import {
+  ChevronRight, ChevronDown, File, Folder,
+  FolderOpen, Plus, Trash2
 } from 'lucide-react';
 import { useEditorStore } from '../../store/editorStore';
 
@@ -21,11 +21,11 @@ const ProjectFileTree = ({ files, projectId, onCreateFile, onDeleteFile, isDark 
 
   const buildTree = (files) => {
     const tree = {};
-    
+
     files.forEach(file => {
       const parts = file.path.split('/');
       let current = tree;
-      
+
       parts.forEach((part, index) => {
         if (!current[part]) {
           current[part] = {
@@ -39,7 +39,7 @@ const ProjectFileTree = ({ files, projectId, onCreateFile, onDeleteFile, isDark 
         current = current[part].children;
       });
     });
-    
+
     return tree;
   };
 
@@ -51,7 +51,7 @@ const ProjectFileTree = ({ files, projectId, onCreateFile, onDeleteFile, isDark 
       return (
         <div key={node.path}>
           <div
-            className={`flex items-center gap-2 px-2 py-1.5 cursor-pointer rounded-sm group
+            className={`flex items-center gap-2 px-2 py-1.5 cursor-pointer rounded-md group my-0.5
               ${isDark ? 'hover:bg-[#2a2d2e] text-[#cccccc]' : 'hover:bg-gray-200 text-gray-800'}`}
             style={{ paddingLeft: `${8 + level * 16}px` }}
             onClick={() => {
@@ -78,7 +78,7 @@ const ProjectFileTree = ({ files, projectId, onCreateFile, onDeleteFile, isDark 
               </>
             )}
             <span className="text-sm flex-1">{node.name}</span>
-            
+
             {!node.isFolder && (
               <button
                 onClick={(e) => {
