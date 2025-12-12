@@ -57,14 +57,7 @@ button {
   outline: none;
 }
 
-/* Monaco Editor specific */
-.monaco-editor {
-  background-color: #1e1e1e !important;
-}
-
-.monaco-editor .margin {
-  background-color: #1e1e1e !important;
-}
+/* Monaco Editor specific overrides removed to allow theme switching */
 
 /* Ensure text is readable */
 input,

@@ -82,7 +82,7 @@ const TerminalPanel = () => {
   return (
     <div className={`h-64 flex flex-col border-t
       ${isDark ? 'bg-[#1e1e1e] border-[#3c3c3c]' : 'bg-white border-gray-300'}`}>
-      
+
       {/* Header */}
       <div className={`flex items-center justify-between px-4 py-1.5 border-b
         ${isDark ? 'bg-[#252526] border-[#3c3c3c]' : 'bg-gray-100 border-gray-300'}`}>
@@ -115,7 +115,7 @@ const TerminalPanel = () => {
           <div key={index} className="mb-1">
             {item.type === 'command' && (
               <div className="flex items-start gap-2">
-                <span className="text-[#4ec9b0]">$</span>
+                <span className={isDark ? 'text-[#4ec9b0]' : 'text-teal-600'}>$</span>
                 <span>{item.content}</span>
               </div>
             )}
@@ -135,7 +135,7 @@ const TerminalPanel = () => {
 
         {/* Input Line */}
         <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-1">
-          <span className="text-[#4ec9b0]">$</span>
+          <span className={isDark ? 'text-[#4ec9b0]' : 'text-teal-600'}>$</span>
           <input
             ref={inputRef}
             type="text"

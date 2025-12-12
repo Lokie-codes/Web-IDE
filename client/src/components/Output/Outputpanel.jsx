@@ -9,7 +9,7 @@ const OutputPanel = () => {
   return (
     <div className={`h-64 flex flex-col border-t
       ${isDark ? 'bg-[#1e1e1e] border-[#3c3c3c]' : 'bg-white border-gray-300'}`}>
-      
+
       {/* Panel Header */}
       <div className={`flex items-center justify-between px-3 py-1.5 border-b
         ${isDark ? 'bg-[#252526] border-[#3c3c3c]' : 'bg-gray-100 border-gray-300'}`}>
@@ -54,10 +54,10 @@ const OutputPanel = () => {
         {isRunning ? (
           <div className="flex items-center gap-3">
             <div className="w-4 h-4 border-2 border-t-transparent border-[#007acc] rounded-full animate-spin" />
-            <span className="text-[#cccccc]">Executing code...</span>
+            <span className={isDark ? 'text-[#cccccc]' : 'text-gray-800'}>Executing code...</span>
           </div>
         ) : output ? (
-          <pre className="whitespace-pre-wrap text-[#cccccc]">{output}</pre>
+          <pre className={`whitespace-pre-wrap ${isDark ? 'text-[#cccccc]' : 'text-gray-800'}`}>{output}</pre>
         ) : (
           <span className="text-[#858585] italic">Output will appear here after running your code...</span>
         )}

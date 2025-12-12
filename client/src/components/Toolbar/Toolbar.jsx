@@ -71,8 +71,8 @@ const Toolbar = () => {
               onClick={() => setMode('single')}
               className={`px-4 py-1.5 text-sm font-medium transition-all
                 ${mode === 'single'
-                  ? 'bg-[#007acc] text-white'
-                  : (isDark ? 'bg-[#252526] text-[#cccccc] hover:bg-[#2d2d30]' : 'bg-white text-gray-600 hover:bg-gray-100')
+                  ? (isDark ? '!bg-[#007acc] !text-white' : '!bg-[#2563eb] !text-white')
+                  : (isDark ? 'bg-[#252526] text-[#cccccc] hover:bg-[#2d2d30]' : 'bg-white text-gray-700 hover:bg-gray-100')
                 }`}
             >
               Single File
@@ -82,8 +82,8 @@ const Toolbar = () => {
               className={`px-4 py-1.5 text-sm font-medium transition-all border-l
                 ${isDark ? 'border-[#3c3c3c]' : 'border-gray-300'}
                 ${mode === 'project'
-                  ? 'bg-[#007acc] text-white'
-                  : (isDark ? 'bg-[#252526] text-[#cccccc] hover:bg-[#2d2d30]' : 'bg-white text-gray-600 hover:bg-gray-100')
+                  ? (isDark ? '!bg-[#007acc] !text-white' : '!bg-[#2563eb] !text-white')
+                  : (isDark ? 'bg-[#252526] text-[#cccccc] hover:bg-[#2d2d30]' : 'bg-white text-gray-700 hover:bg-gray-100')
                 }`}
             >
               Project
@@ -101,8 +101,8 @@ const Toolbar = () => {
             className={`flex items-center gap-2 px-5 py-2 rounded-md font-medium text-sm
               transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed
               ${isDark
-                ? 'bg-[#16825d] hover:bg-[#1a9e6f] text-white'
-                : 'bg-green-600 hover:bg-green-700 text-white'
+                ? 'bg-[#6366f1] hover:bg-[#4f46e5] text-white'
+                : '!bg-indigo-600 hover:!bg-indigo-700 !text-white'
               }`}
           >
             <Play size={16} fill="currentColor" />
