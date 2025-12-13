@@ -82,7 +82,7 @@ Piston API: http://localhost:2000
 
 **Backend:**
 ```
-cd server
+cd express-server
 npm install
 npm run dev
 ```
@@ -126,7 +126,7 @@ codeforge-ide/
 │   ├── Dockerfile
 │   └── package.json
 │
-├── server/                 # Express backend
+├── express-server/                 # Express backend
 │   ├── src/
 │   │   ├── routes/         # API routes
 │   │   ├── services/       # Business logic
@@ -217,7 +217,7 @@ docker restart piston_api
 ### Backend connection issues
 ```
 # Check backend logs
-cd server && npm run dev
+cd express-server && npm run dev
 
 # Verify health endpoint
 curl http://localhost:3001/api/health
