@@ -37,3 +37,10 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Django
+*.pyc
+migrations/
+__pycache__
+*.sqlite3
+*.db
