@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'codeforge_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'codeforge',
+        'USER': 'codeforge',
+        'PASSWORD': 'codeforge',
+        'HOST': 'localhost',  # Use 'postgres' if running inside docker network
+        'PORT': '5432',
     }
 }
 
