@@ -33,42 +33,93 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  # Express Backend
-  # backend:
-  #   build:
-  #     context: ./express-server
-  #     dockerfile: Dockerfile
-  #   container_name: codeforge_backend
-  #   ports:
-  #     - "3001:3001"
-  #   environment:
-  #     - PISTON_URL=http://piston:2000
-  #     - NODE_ENV=production
-  #     - PORT=3001
-  #   depends_on:
-  #     - piston
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./express-server/data:/app/data
-  #   healthcheck:
-  #     test: [ "CMD", "curl", "-f", "http://localhost:3001/api/health" ]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 3
 
-  # # React Frontend
-  # frontend:
-  #   build:
-  #     context: ./client
-  #     dockerfile: Dockerfile
-  #   container_name: codeforge_frontend
-  #   ports:
-  #     - "3000:80"
-  #   depends_on:
-  #     - backend
-  #   restart: unless-stopped
-  #   environment:
-  #     - VITE_API_URL=http://localhost:3001
+  # Django Backend
+  django:
+    build:
+      context: ./django-server
+      dockerfile: Dockerfile
+    container_name: codeforge_django
+    ports:
+      - "8000:8000"
+    environment:
+      - PISTON_URL=http://piston:2000
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=codeforge
+      - POSTGRES_PASSWORD=codeforge
+      - POSTGRES_DB=codeforge
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Spring Boot Backend
+  spring:
+    build:
+      context: ./springboot-server
+      dockerfile: Dockerfile
+    image: codeforge_spring
+    container_name: codeforge_spring
+    ports:
+      - "8080:8080"
+    environment:
+      - PISTON_URL=http://piston:2000
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=codeforge
+      - POSTGRES_PASSWORD=codeforge
+      - POSTGRES_DB=codeforge
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/api/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Express Backend
+  express:
+    build:
+      context: ./express-server
+      dockerfile: Dockerfile
+    container_name: codeforge_express
+    ports:
+      - "3001:3001"
+    environment:
+      - PISTON_URL=http://piston:2000
+      - POSTGRES_USER=codeforge
+      - POSTGRES_PASSWORD=codeforge
+      - POSTGRES_DB=codeforge
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "node", "-e", "require('http').get('http://localhost:3001/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: codeforge_frontend
+    container_name: codeforge_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - express
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   piston-packages:
