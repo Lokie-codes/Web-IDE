@@ -1,5 +1,0 @@
-target/
-data/
-*.db
-*.log
-.mvn/wrapper/maven-wrapper.properties
