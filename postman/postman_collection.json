@@ -2,7 +2,7 @@
     "info": {
         "_postman_id": "f2a3b4c5-d6e7-8f9g-0h1i-j2k3l4m5n6o7",
         "name": "Backend Test Collection",
-        "description": "Collection to test backend endpoints for the Web IDE (Node.js, Spring Boot, Django)",
+        "description": "Collection to test Express backend endpoints for the Web IDE",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [

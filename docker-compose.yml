@@ -44,6 +44,7 @@ services:
       - "3001:3001"
     environment:
       - PISTON_URL=http://piston:2000
+      - CORS_ORIGIN=http://localhost
     depends_on:
       - piston
     restart: unless-stopped
